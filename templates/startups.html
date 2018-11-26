@@ -1,0 +1,21 @@
+<html>
+
+<body>
+
+    <h1>Startups</h1>
+
+
+    {% for startup in startups %}
+
+    <div>
+        <ul>
+            <li>
+               <a href="{{url_for('show_startup',startup_id=startup.id)}}">{{startup.name}}</a> 
+            </li>
+        </ul>
+
+    </div>
+    {% endfor %}
+</body>
+
+</html>

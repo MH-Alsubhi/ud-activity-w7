@@ -1,0 +1,22 @@
+<html>
+
+<body>
+
+    <h1>{{startup.name}}</h1>
+
+
+    {% for founder in founders %}
+
+    <div>
+        <ul>
+            <li>
+               <a href="{{url_for('edit_founder',founder_id = founder.id)}}">{{founder.name}}</a> <br>
+               {{founder.bio}}
+            </li>
+        </ul>
+
+    </div>
+    {% endfor %}
+</body>
+
+</html>

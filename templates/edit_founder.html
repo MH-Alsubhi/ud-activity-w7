@@ -1,0 +1,13 @@
+<html>
+
+<body>
+
+<form action="{{url_for('edit_founder',founder_id = founder.id)}}" method="POST">
+    <input type="text" name="name" value="{{founder.name}}">
+    <input type="text" name="bio" value="{{founder.bio}}">
+    <button>Edit</button>
+</form>
+
+</body>
+
+</html>
