@@ -10,8 +10,12 @@
     <div>
         <ul>
             <li>
-               <a href="{{url_for('edit_founder',founder_id = founder.id)}}">{{founder.name}}</a> <br>
-               {{founder.bio}}
+                <a href="{{url_for('edit_founder',founder_id = founder.id)}}">{{founder.name}}</a> <br>
+                {{founder.bio}}
+                <br>
+                <a href="{{url_for('edit_founder',founder_id = founder.id)}}">Edit</a>
+                <a href="{{url_for('delete_founder', founder_id = founder.id)}}">
+                    Delete</a>
             </li>
         </ul>
 

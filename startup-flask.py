@@ -40,7 +40,8 @@ def new_founder(startup_id):
         startup_id = startup_id
         session.add(new_founder)
         session.commit()
-        return redirect(url_for ('show_startup', startup_id=startup.id, founders=founders))
+       
+        return redirect(url_for('show_startup', startup_id=startup.id, founders=founders))
     else:
         return render_template('new_founder.html', startup=startup)
 
@@ -56,10 +57,26 @@ def edit_founder(founder_id):
             edited_founder.bio = request.form['bio']
         session.add(edited_founder)
         session.commit()
+        
         return redirect(url_for('show_startup', founder=edited_founder, startup_id=edited_founder.startup_id))
     else:
         return render_template(
             'edit_founder.html', founder=edited_founder)
+
+# delete founder
+@app.route('/startups/<int:founder_id>/delete', methods=['GET', 'POST'])
+def delete_founder(founder_id):
+    deleted_founder = session.query(Founder).filter_by(id=founder_id).one()
+    startup = session.query(Startup).filter_by(id=deleted_founder.startup_id).one()
+    founders = session.query(Founder).filter_by(startup_id=startup.id).all()
+    if request.method == 'POST':
+        session.delete(deleted_founder)
+        session.commit()
+        
+        return redirect(url_for('show_startup', founder=deleted_founder, startup_id=deleted_founder.startup_id))
+    else:
+        return render_template(
+            'delete_founder.html', founder=deleted_founder)
 
 
 if __name__ == '__main__':
