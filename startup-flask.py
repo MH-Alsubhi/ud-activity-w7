@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from startup_setup import Base, Startup, Founder
@@ -40,7 +40,7 @@ def new_founder(startup_id):
         startup_id = startup_id
         session.add(new_founder)
         session.commit()
-       
+        flash("New founder added successfully !")
         return redirect(url_for('show_startup', startup_id=startup.id, founders=founders))
     else:
         return render_template('new_founder.html', startup=startup)
@@ -57,7 +57,7 @@ def edit_founder(founder_id):
             edited_founder.bio = request.form['bio']
         session.add(edited_founder)
         session.commit()
-        
+        flash("Founder edited successfully !")
         return redirect(url_for('show_startup', founder=edited_founder, startup_id=edited_founder.startup_id))
     else:
         return render_template(
@@ -72,7 +72,7 @@ def delete_founder(founder_id):
     if request.method == 'POST':
         session.delete(deleted_founder)
         session.commit()
-        
+        flash("Founder deleted successfully !")
         return redirect(url_for('show_startup', founder=deleted_founder, startup_id=deleted_founder.startup_id))
     else:
         return render_template(
@@ -80,5 +80,6 @@ def delete_founder(founder_id):
 
 
 if __name__ == '__main__':
+    app.secret_key = 'why we use this key for flash messages ? i will search about it :)'
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
