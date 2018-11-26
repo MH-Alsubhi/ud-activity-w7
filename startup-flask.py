@@ -32,15 +32,17 @@ def show_startup(startup_id):
 # add founder
 @app.route('/startups/<int:startup_id>/new', methods=['GET', 'POST'])
 def new_founder(startup_id):
+    startup = session.query(Startup).filter_by(id=startup_id).one()
+    founders = session.query(Founder).filter_by(startup_id=startup.id).all()
     if request.method == 'POST':
         new_founder = Founder(
             name=request.form['name'], bio=request.form['bio'], startup_id=startup_id)
         startup_id = startup_id
         session.add(new_founder)
         session.commit()
-        return redirect(url_for('startupMenu', startup_id=startup_id))
+        return redirect(url_for ('show_startup', startup_id=startup.id, founders=founders))
     else:
-        return render_template('newmenuitem.html', startup_id=startup_id)
+        return render_template('new_founder.html', startup=startup)
 
 
 # edit founder
